@@ -1,0 +1,182 @@
+[
+  {
+    "id": "count_sales_en",
+    "language": "en",
+    "question": "how many sales are there",
+    "expected_sql": "SELECT count(*) FROM sales"
+  },
+  {
+    "id": "count_sales_pt",
+    "language": "pt",
+    "question": "quantas vendas existem",
+    "expected_sql": "SELECT count(*) FROM sales"
+  },
+  {
+    "id": "total_paid_en",
+    "language": "en",
+    "question": "total amount of paid sales",
+    "expected_sql": "SELECT sum(amount) FROM sales WHERE status = 'paid'"
+  },
+  {
+    "id": "by_city_pt",
+    "language": "pt",
+    "question": "total de vendas por cidade",
+    "expected_sql": "SELECT c.city, sum(s.amount) FROM sales s JOIN customers c ON c.id = s.customer_id GROUP BY c.city"
+  },
+  {
+    "id": "top5_products_en",
+    "language": "en",
+    "question": "top 5 products by revenue",
+    "expected_sql": "SELECT p.name, sum(s.amount) AS revenue FROM sales s JOIN products p ON p.id = s.product_id GROUP BY p.name ORDER BY revenue DESC LIMIT 5"
+  },
+  {
+    "id": "avg_ticket_march_pt",
+    "language": "pt",
+    "question": "ticket médio das vendas em março de 2026",
+    "expected_sql": "SELECT avg(amount) FROM sales WHERE sold_at >= DATE '2026-03-01' AND sold_at < DATE '2026-04-01'"
+  },
+  {
+    "id": "sales_per_month_en",
+    "language": "en",
+    "question": "how many sales per month",
+    "expected_sql": "SELECT date_trunc('month', sold_at) AS month, count(*) AS sales FROM sales GROUP BY month ORDER BY month"
+  },
+  {
+    "id": "sales_per_month_pt",
+    "language": "pt",
+    "question": "quantas vendas por mês",
+    "expected_sql": "SELECT date_trunc('month', sold_at) AS month, count(*) AS sales FROM sales GROUP BY month ORDER BY month"
+  },
+  {
+    "id": "customers_per_state_en",
+    "language": "en",
+    "question": "how many customers per state",
+    "expected_sql": "SELECT state, count(*) AS customers FROM customers GROUP BY state ORDER BY state"
+  },
+  {
+    "id": "customers_per_state_pt",
+    "language": "pt",
+    "question": "quantos clientes por estado",
+    "expected_sql": "SELECT state, count(*) AS customers FROM customers GROUP BY state ORDER BY state"
+  },
+  {
+    "id": "cancelled_count_en",
+    "language": "en",
+    "question": "how many cancelled sales are there",
+    "expected_sql": "SELECT count(*) FROM sales WHERE status = 'cancelled'"
+  },
+  {
+    "id": "cancelled_count_pt",
+    "language": "pt",
+    "question": "quantas vendas canceladas existem",
+    "expected_sql": "SELECT count(*) FROM sales WHERE status = 'cancelled'"
+  },
+  {
+    "id": "revenue_by_category_en",
+    "language": "en",
+    "question": "total revenue by product category",
+    "expected_sql": "SELECT p.category, sum(s.amount) AS revenue FROM sales s JOIN products p ON p.id = s.product_id GROUP BY p.category ORDER BY p.category"
+  },
+  {
+    "id": "revenue_by_category_pt",
+    "language": "pt",
+    "question": "receita total por categoria de produto",
+    "expected_sql": "SELECT p.category, sum(s.amount) AS revenue FROM sales s JOIN products p ON p.id = s.product_id GROUP BY p.category ORDER BY p.category"
+  },
+  {
+    "id": "best_customer_en",
+    "language": "en",
+    "question": "which customer spent the most",
+    "expected_sql": "SELECT c.name, sum(s.amount) AS total FROM sales s JOIN customers c ON c.id = s.customer_id GROUP BY c.name ORDER BY total DESC, c.name LIMIT 1"
+  },
+  {
+    "id": "best_customer_pt",
+    "language": "pt",
+    "question": "qual cliente gastou mais",
+    "expected_sql": "SELECT c.name, sum(s.amount) AS total FROM sales s JOIN customers c ON c.id = s.customer_id GROUP BY c.name ORDER BY total DESC, c.name LIMIT 1"
+  },
+  {
+    "id": "open_sales_amount_en",
+    "language": "en",
+    "question": "total amount of open sales",
+    "expected_sql": "SELECT sum(amount) FROM sales WHERE status = 'open'"
+  },
+  {
+    "id": "open_sales_amount_pt",
+    "language": "pt",
+    "question": "valor total das vendas em aberto",
+    "expected_sql": "SELECT sum(amount) FROM sales WHERE status = 'open'"
+  },
+  {
+    "id": "avg_quantity_en",
+    "language": "en",
+    "question": "average quantity per sale",
+    "expected_sql": "SELECT avg(quantity) FROM sales"
+  },
+  {
+    "id": "avg_quantity_pt",
+    "language": "pt",
+    "question": "quantidade média por venda",
+    "expected_sql": "SELECT avg(quantity) FROM sales"
+  },
+  {
+    "id": "sales_in_recife_en",
+    "language": "en",
+    "question": "how many sales were made to customers in Recife",
+    "expected_sql": "SELECT count(*) FROM sales s JOIN customers c ON c.id = s.customer_id WHERE c.city = 'Recife'"
+  },
+  {
+    "id": "sales_in_recife_pt",
+    "language": "pt",
+    "question": "quantas vendas foram feitas para clientes de Recife",
+    "expected_sql": "SELECT count(*) FROM sales s JOIN customers c ON c.id = s.customer_id WHERE c.city = 'Recife'"
+  },
+  {
+    "id": "products_never_sold_en",
+    "language": "en",
+    "question": "which products were never sold",
+    "expected_sql": "SELECT p.name FROM products p WHERE p.id NOT IN (SELECT DISTINCT s.product_id FROM sales s) ORDER BY p.name"
+  },
+  {
+    "id": "products_never_sold_pt",
+    "language": "pt",
+    "question": "quais produtos nunca foram vendidos",
+    "expected_sql": "SELECT p.name FROM products p WHERE p.id NOT IN (SELECT DISTINCT s.product_id FROM sales s) ORDER BY p.name"
+  },
+  {
+    "id": "max_sale_en",
+    "language": "en",
+    "question": "what is the largest sale amount",
+    "expected_sql": "SELECT max(amount) FROM sales"
+  },
+  {
+    "id": "max_sale_pt",
+    "language": "pt",
+    "question": "qual o maior valor de venda",
+    "expected_sql": "SELECT max(amount) FROM sales"
+  },
+  {
+    "id": "daily_sales_feb_en",
+    "language": "en",
+    "question": "total sales per day in February 2026",
+    "expected_sql": "SELECT sold_at, sum(amount) AS total FROM sales WHERE sold_at >= DATE '2026-02-01' AND sold_at < DATE '2026-03-01' GROUP BY sold_at ORDER BY sold_at"
+  },
+  {
+    "id": "daily_sales_feb_pt",
+    "language": "pt",
+    "question": "total de vendas por dia em fevereiro de 2026",
+    "expected_sql": "SELECT sold_at, sum(amount) AS total FROM sales WHERE sold_at >= DATE '2026-02-01' AND sold_at < DATE '2026-03-01' GROUP BY sold_at ORDER BY sold_at"
+  },
+  {
+    "id": "customers_created_2025_en",
+    "language": "en",
+    "question": "how many customers were created in 2025",
+    "expected_sql": "SELECT count(*) FROM customers WHERE created_at >= DATE '2025-01-01' AND created_at < DATE '2026-01-01'"
+  },
+  {
+    "id": "customers_created_2025_pt",
+    "language": "pt",
+    "question": "quantos clientes foram criados em 2025",
+    "expected_sql": "SELECT count(*) FROM customers WHERE created_at >= DATE '2025-01-01' AND created_at < DATE '2026-01-01'"
+  }
+]
